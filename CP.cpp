@@ -2,10 +2,32 @@
 //
 
 #include <iostream>
+#include "analyzer.h"
+
+using namespace LLAnalyzer;
+
+void initialize()
+{
+	Terminator i = Terminator('i');
+	Terminator plus = Terminator('+');
+	Terminator mulity = Terminator('*');
+	Terminator left = Terminator('(');
+	Terminator right = Terminator(')');
+	Terminator end = Terminator('#');
+	NonTerminator E = NonTerminator('E', Non::Normal);
+	NonTerminator Estar = NonTerminator('E', Non::Left);
+	NonTerminator T = NonTerminator('T', Non::Normal);
+	NonTerminator Tstar = NonTerminator('T', Non::Left);
+	NonTerminator F=NonTerminator('F',Non::Normal);
+
+
+}
 
 int main()
 {
     std::cout << "Hello World!\n";
+
+
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

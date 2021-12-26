@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <unordered_set>
 #include <vector>
@@ -15,23 +15,23 @@ namespace LLAnalyzer
 		Normal,
 		Left,
 		Factor
-	};//·Ö±ğ±íÊ¾Õı³£·ÇÖÕ½á·û¡¢ÓÉÏû³ı×óµİ¹é²úÉúµÄ·ÇÖÕ½á·û¡¢ÓÉÏû³ı¹«¹²×óÒò×Ó²úÉúµÄ·ÇÖÕ½á·û
+	};//åˆ†åˆ«è¡¨ç¤ºæ­£å¸¸éç»ˆç»“ç¬¦ã€ç”±æ¶ˆé™¤å·¦é€’å½’äº§ç”Ÿçš„éç»ˆç»“ç¬¦ã€ç”±æ¶ˆé™¤å…¬å…±å·¦å› å­äº§ç”Ÿçš„éç»ˆç»“ç¬¦
 
 	class First :public unordered_set<Terminator>
 	{
 
-	};//First¼¯ºÏ
+	};//Firsté›†åˆ
 
 	class Follow :public unordered_set<Terminator>
 	{
 
-	};//Follow¼¯ºÏ
+	};//Followé›†åˆ
 
 
 	class Base
 	{
 	public:
-		char symbol;//¶ÔÓ¦·ûºÅ
+		char symbol;//å¯¹åº”ç¬¦å·
 
 		bool isNull();
 
@@ -41,55 +41,56 @@ namespace LLAnalyzer
 		}
 
 		bool operator ==(Base& base);
-	};//»ùÀà
+	};//åŸºç±»
 
 	class Terminator : public Base
 	{
-
-	};//ÖÕ½á·û
+	public:
+		Terminator(char c) :Base(c){}
+	};//ç»ˆç»“ç¬¦
 
 	class NonTerminator :public Base
 	{
 	public:
-		Non check = Non::Normal;//ÊÇ·ñÎªÏû³ı×óµİ¹é²úÉúµÄ·ÇÖÕ½á·û
+		Non check = Non::Normal;//æ˜¯å¦ä¸ºæ¶ˆé™¤å·¦é€’å½’äº§ç”Ÿçš„éç»ˆç»“ç¬¦
 		bool operator ==(NonTerminator& nonTerminator);
-
-	};//·ÇÖÕ½á·û
+		NonTerminator(char c,Non n):Base(c),check(n){}
+	};//éç»ˆç»“ç¬¦
 
 	class Ipsilon :public Base
 	{
 	public:
 		Ipsilon() :Base('$') {}
-	};//¿Õ·û,¶¨ÒåÎª$,Ò»ÇĞ$¶¼±íÊ¾¿Õ
+	};//ç©ºç¬¦,å®šä¹‰ä¸º$,ä¸€åˆ‡$éƒ½è¡¨ç¤ºç©º
 
 	class Right :public vector<Base>
 	{
 
-	};//²úÉúÊ½ÓÒ²à
+	};//äº§ç”Ÿå¼å³ä¾§
 
 	class Production
 	{
 	public:
-		NonTerminator left;//²úÉúÊ½×ó²à·ûºÅ
-		Right right;//²úÉúÊ½ÓÒ²à·ûºÅ
+		NonTerminator left;//äº§ç”Ÿå¼å·¦ä¾§ç¬¦å·
+		Right right;//äº§ç”Ÿå¼å³ä¾§ç¬¦å·
 		bool operator ==(Production& production);
-	};//²úÉúÊ½
+	};//äº§ç”Ÿå¼
 
 
 	class Translator
 	{
 
-	};//·­ÒëÆ÷£¬ÄÚ²¿Ìá¹©½«ÎÄ·¨×ª»»ÎªLL(1)ÎÄ·¨µÄº¯Êı
+	};//ç¿»è¯‘å™¨ï¼Œå†…éƒ¨æä¾›å°†æ–‡æ³•è½¬æ¢ä¸ºLL(1)æ–‡æ³•çš„å‡½æ•°
 
 	class LLTable
 	{
 
-	};//ÓÃÓÚÌá¹©LL(1)·ÖÎö±í
+	};//ç”¨äºæä¾›LL(1)åˆ†æè¡¨
 
 	class Parser
 	{
 
-	};//ÓÃÓÚ½«²âÊÔÓÃÀı½øĞĞ×ÔÉÏ¶øÏÂÓï·¨·ÖÎö
+	};//ç”¨äºå°†æµ‹è¯•ç”¨ä¾‹è¿›è¡Œè‡ªä¸Šè€Œä¸‹è¯­æ³•åˆ†æ
 
 	class PublicProperties
 	{
@@ -101,14 +102,14 @@ namespace LLAnalyzer
 			instance = this;
 		}
 
-		unordered_map <NonTerminator, First> firstOfNonTerminator;//·ÇÖÕ½á·ûµÄFirst
-		unordered_map<Right, First> firstOfRight;//²úÉúÊ½ÓÒ²àµÄFirst
-		unordered_map<NonTerminator, Follow> follow;//·ÇÖÕ½á·ûµÄFollow
-		unordered_map<pair<NonTerminator, Terminator>, Production> table;//LL(1)·ÖÎö±í
-		unordered_set<Production> answer;//ÉÏ´Î·ÖÎöºóËùµÃµ½µÄ´ğ°¸Êı×é
+		unordered_map <NonTerminator, First> firstOfNonTerminator;//éç»ˆç»“ç¬¦çš„First
+		unordered_map<Right, First> firstOfRight;//äº§ç”Ÿå¼å³ä¾§çš„First
+		unordered_map<NonTerminator, Follow> follow;//éç»ˆç»“ç¬¦çš„Follow
+		unordered_map<pair<NonTerminator, Terminator>, Production> table;//LL(1)åˆ†æè¡¨
+		unordered_set<Production> answer;//ä¸Šæ¬¡åˆ†æåæ‰€å¾—åˆ°çš„ç­”æ¡ˆæ•°ç»„
 
-		unordered_set<NonTerminator> noTers;//ÎÄ·¨ÖĞÓÃµ½µÄ·ÇÖÕ½á·û
-		unordered_set<Terminator> ters;//ÎÄ·¨ÖĞÓÃµ½µÄÖÕ½á·û
+		unordered_set<NonTerminator> noTers;//æ–‡æ³•ä¸­ç”¨åˆ°çš„éç»ˆç»“ç¬¦
+		unordered_set<Terminator> ters;//æ–‡æ³•ä¸­ç”¨åˆ°çš„ç»ˆç»“ç¬¦
 	};
 
 }

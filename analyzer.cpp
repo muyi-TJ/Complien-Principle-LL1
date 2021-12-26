@@ -1,4 +1,4 @@
-#include "analyzer.h"
+﻿#include "analyzer.h"
 namespace LLAnalyzer {
 
 	bool NonTerminator::operator==(NonTerminator & nonTerminator)
