@@ -8,17 +8,32 @@ using namespace LLAnalyzer;
 
 void initialize()
 {
+	unordered_map<pair<NonTerminator, Terminator>, Production> table;
 	Terminator i = Terminator('i');
 	Terminator plus = Terminator('+');
 	Terminator mulity = Terminator('*');
 	Terminator left = Terminator('(');
 	Terminator right = Terminator(')');
 	Terminator end = Terminator('#');
+	Ipsilon ipsilon = Ipsilon();
 	NonTerminator E = NonTerminator('E', Non::Normal);
 	NonTerminator Estar = NonTerminator('E', Non::Left);
 	NonTerminator T = NonTerminator('T', Non::Normal);
 	NonTerminator Tstar = NonTerminator('T', Non::Left);
 	NonTerminator F=NonTerminator('F',Non::Normal);
+	table[pair<NonTerminator, Terminator>{E, i}] = Production(E, Right({ T,Estar }));
+	table[pair<NonTerminator, Terminator>{E, left}] = Production(E, { T,Estar });
+	table[pair<NonTerminator, Terminator>{Estar, plus}] = Production(Estar, { plus,T,Estar });
+	table[pair<NonTerminator, Terminator>{Estar, right}] = Production(Estar, { ipsilon });
+	table[pair<NonTerminator, Terminator>{Estar, end}] = Production(Estar, { ipsilon });
+	table[pair<NonTerminator, Terminator>{T, i}] = Production(T, Right({ F,Tstar }));
+	table[pair<NonTerminator, Terminator>{T, left}] = Production(T, { F,Tstar });
+	table[pair<NonTerminator, Terminator>{Tstar, plus}] = Production(Tstar, { ipsilon });
+	table[pair<NonTerminator, Terminator>{Tstar, mulity}] = Production(Tstar, { mulity,F,Tstar });
+	table[pair<NonTerminator, Terminator>{Tstar, right}] = Production(Tstar, { ipsilon });
+	table[pair<NonTerminator, Terminator>{Tstar, end}] = Production(Tstar, { ipsilon });
+	table[pair<NonTerminator, Terminator>{F, i}] = Production(F, Right({ i }));
+	table[pair<NonTerminator, Terminator>{F, left}] = Production(F, Right({ left,E,right }));
 
 
 }

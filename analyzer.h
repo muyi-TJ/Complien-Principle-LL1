@@ -57,15 +57,22 @@ namespace LLAnalyzer
 		NonTerminator(char c,Non n):Base(c),check(n){}
 	};//非终结符
 
-	class Ipsilon :public Base
+	class Ipsilon :public Terminator
 	{
 	public:
-		Ipsilon() :Base('$') {}
+		Ipsilon() :Terminator('$') {}
 	};//空符,定义为$,一切$都表示空
 
 	class Right :public vector<Base>
 	{
-
+	public:
+		Right(initializer_list<Base> list)
+		{
+			for (auto a : list)
+			{
+				this->emplace_back(a);
+			}
+		}
 	};//产生式右侧
 
 	class Production
@@ -74,6 +81,7 @@ namespace LLAnalyzer
 		NonTerminator left;//产生式左侧符号
 		Right right;//产生式右侧符号
 		bool operator ==(Production& production);
+		Production(NonTerminator n,Right r):left(n),right(r){}
 	};//产生式
 
 
