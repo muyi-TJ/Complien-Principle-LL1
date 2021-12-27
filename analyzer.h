@@ -8,8 +8,9 @@
 
 using namespace std;
 
-namespace LLAnalyzer 
-{
+namespace LLAnalyzer {
+	vector<char> banList = { '#','$','\'' };//禁止输入保留字符
+
 	enum Non
 	{
 		Normal,
@@ -41,12 +42,13 @@ namespace LLAnalyzer
 		}
 
 		bool operator ==(Base& base);
+		virtual void outPut();
 	};//基类
 
 	class Terminator : public Base
 	{
 	public:
-		Terminator(char c) :Base(c){}
+		Terminator(char c) :Base(c) {}
 	};//终结符
 
 	class NonTerminator :public Base
@@ -54,7 +56,8 @@ namespace LLAnalyzer
 	public:
 		Non check = Non::Normal;//是否为消除左递归产生的非终结符
 		bool operator ==(NonTerminator& nonTerminator);
-		NonTerminator(char c,Non n):Base(c),check(n){}
+		NonTerminator(char c, Non n) :Base(c), check(n) {}
+		void outPut()override;
 	};//非终结符
 
 	class Ipsilon :public Terminator
@@ -63,16 +66,16 @@ namespace LLAnalyzer
 		Ipsilon() :Terminator('$') {}
 	};//空符,定义为$,一切$都表示空
 
-	class Right :public vector<Base>
+	class Right
 	{
 	public:
+		vector<Base> bases;
 		Right(initializer_list<Base> list)
 		{
-			for (auto a : list)
-			{
-				this->emplace_back(a);
-			}
+			bases = { list };
 		}
+		void outPut();
+		bool operator ==(Right& right);
 	};//产生式右侧
 
 	class Production
@@ -81,7 +84,8 @@ namespace LLAnalyzer
 		NonTerminator left;//产生式左侧符号
 		Right right;//产生式右侧符号
 		bool operator ==(Production& production);
-		Production(NonTerminator n,Right r):left(n),right(r){}
+		Production(NonTerminator n, Right r) :left(n), right(r) {}
+		void outPut();
 	};//产生式
 
 

@@ -34,13 +34,16 @@ void initialize()
 	table[pair<NonTerminator, Terminator>{Tstar, end}] = Production(Tstar, { ipsilon });
 	table[pair<NonTerminator, Terminator>{F, i}] = Production(F, Right({ i }));
 	table[pair<NonTerminator, Terminator>{F, left}] = Production(F, Right({ left,E,right }));
-
+	PublicProperties::instance->table = table;
 
 }
 
 int main()
 {
     std::cout << "Hello World!\n";
+	PublicProperties();
+	initialize();
+
 
 
 }
